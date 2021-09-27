@@ -285,8 +285,8 @@
           <div class="not-surpport">根据实际系统设计</div>
         </div>
         <div v-show="tabIndex == 2">
-          <template v-if="configObject && configObject.action">
-            <template v-for="(event,index) in configObject.action">
+          <div v-if="configObject && configObject.action">
+            <div v-for="(event,index) in configObject.action" :key="index">
               <div :key="index" style="margin-top:10px;">
                 <div
                   style="padding:5px;border-left:#ccc solid 1px;border-right:#ccc solid 1px;border-top:#ccc solid 1px;"
@@ -359,11 +359,11 @@
                   </tr>
                 </table>
               </div>
-            </template>
+            </div>
             <div style="width:100%;padding:10px 10px 10px 10px;">
               <q-btn label="Add" outline @click="addAction" style="width:100%;" />
             </div>
-          </template>
+          </div>
         </div>
       </div>
     </template>
@@ -406,50 +406,50 @@
 
 <script>
 
-import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TopoProperties',
   data () {
     return {
       tabIndex: 0,
-      fontFamilyOptions: ['Arial', "Helvetica", "sans-serif", "宋体", "黑体", "微软雅黑"],
-      textAlignOptions: ["left", "right", "center", "justify"],
-      borderStyleOptions: ["solid", "dashed", "dotted"],
+      fontFamilyOptions: ['Arial', 'Helvetica', 'sans-serif', '宋体', '黑体', '微软雅黑'],
+      textAlignOptions: ['left', 'right', 'center', 'justify'],
+      borderStyleOptions: ['solid', 'dashed', 'dotted'],
       whOptions: ['1024x768', '1366x768', '1280x800', '1440x900', '1600x900', '1920x1080', 'custom'],
-      layerWHTemp: '',
+      layerWHTemp: ''
     }
   },
   computed: {
     layerWH: {
       get: function () {
         if (!this.topoData.layer.width || !this.topoData.layer.height) {
-          this.topoData.layer.width = 1600;
-          this.topoData.layer.height = 900;
+          this.topoData.layer.width = 1600
+          this.topoData.layer.height = 900
         }
-        if (this.layerWHTemp == '') {
-          var wh = this.topoData.layer.width + 'x' + this.topoData.layer.height;
-          if (this.whOptions.indexOf(wh, 0) == -1) {
-            this.layerWHTemp = 'custom';
+        if (!this.layerWHTemp) {
+          const wh = this.topoData.layer.width + 'x' + this.topoData.layer.height
+          if (this.whOptions.indexOf(wh, 0) === -1) {
+            this.layerWHTemp = 'custom'
           } else {
-            this.layerWHTemp = wh;
+            this.layerWHTemp = wh
           }
         } else {
-          var wh = this.topoData.layer.width + 'x' + this.topoData.layer.height;
-          if (this.whOptions.indexOf(wh, 0) == -1) {
-            this.layerWHTemp = 'custom';
+          const wh = this.topoData.layer.width + 'x' + this.topoData.layer.height
+          if (this.whOptions.indexOf(wh, 0) === -1) {
+            this.layerWHTemp = 'custom'
           }
         }
-        return this.layerWHTemp;
+        return this.layerWHTemp
       },
       set: function (val) {
-        this.layerWHTemp = val;
-        if (val == 'custom') {
-
+        this.layerWHTemp = val
+        if (val === 'custom') {
+          //
         } else {
-          var wh = val.split('x');
-          this.topoData.layer.width = parseInt(wh[0]);
-          this.topoData.layer.height = parseInt(wh[1]);
+          const wh = val.split('x')
+          this.topoData.layer.width = parseInt(wh[0])
+          this.topoData.layer.height = parseInt(wh[1])
         }
       }
     },
@@ -458,54 +458,54 @@ export default {
       selectedComponents: state => state.topoEditor.selectedComponents,
       selectedComponentMap: state => state.topoEditor.selectedComponentMap,
       isLayer: state => state.topoEditor.selectedIsLayer,
-      configObject: state => state.topoEditor.selectedComponent,
+      configObject: state => state.topoEditor.selectedComponent
     }),
     animations () {
-      let items = [];
-      if (this.configObject.type == 'dashed') {
-        items = (this.configObject.direction && this.configObject.direction == 'vertical') ?
-          [{ label: '向上', value: 'up' }, { label: '向下', value: 'down' }] : [{ label: '向右', value: 'right' }, { label: '向左', value: 'left' }];
+      let items = []
+      if (this.configObject.type === 'dashed') {
+        items = (this.configObject.direction && this.configObject.direction === 'vertical')
+          ? [{ label: '向上', value: 'up' }, { label: '向下', value: 'down' }] : [{ label: '向右', value: 'right' }, { label: '向左', value: 'left' }]
       }
-      return items;
+      return items
     }
   },
   methods: {
     initPage (configData) {
-      this.configData = configData;
+      this.configData = configData
     },
     changeTab (tabIndex) {
-      this.tabIndex = tabIndex;
+      this.tabIndex = tabIndex
     },
     bindData (configObject, index, isLayer) {
-      this.configObject = configObject;
-      this.isLayer = isLayer;
+      this.configObject = configObject
+      this.isLayer = isLayer
       if (isLayer === false) {
-
+        //
       }
     },
     generateTargetComponentOptions () {
-      var options = [];
+      const options = []
       this.topoData.components.forEach(component => {
-        if (this.configObject.identifier != component.identifier) {
+        if (this.configObject.identifier !== component.identifier) {
           options.push({
             label: component.name || component.type,
             value: component.identifier
-          });
+          })
         }
-      });
-      return options;
+      })
+      return options
     },
     removeAction (index) {
-      this.configObject.action.splice(index, 1);
+      this.configObject.action.splice(index, 1)
     },
     addAction () {
-      var action = {
+      const action = {
         type: 'click',
         action: 'visible',
         showItems: [],
         hideItems: []
-      };
-      this.configObject.action.push(action);
+      }
+      this.configObject.action.push(action)
     }
   },
   mounted () {

@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row">
-      
+
     </div>
   </q-page>
 </template>

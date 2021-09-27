@@ -7,18 +7,18 @@ pluginspage="http://www.adobe.com/svg/viewer/install/" />
 </template>
 
 <script>
-import svgView from './ViewSvg';
+import svgView from './ViewSvg'
 
 export default {
-    name: 'ViewSvgImage',
-    extends: svgView,
-    methods: {        
-        onResize() {
-            
-        }
-    },
-    mounted() {
-        this.onResize();
+  name: 'ViewSvgImage',
+  extends: svgView,
+  methods: {
+    onResize () {
+
     }
+  },
+  mounted () {
+    this.onResize()
+  }
 }
 </script>

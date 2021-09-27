@@ -1,7 +1,7 @@
 export const getTopoConfigData = (state) => {
-    return state.topoData;
-};
+  return state.topoData
+}
 
 export const getSelectedComponents = (state) => {
-    return state.selectedComponents;
-};
+  return state.selectedComponents
+}

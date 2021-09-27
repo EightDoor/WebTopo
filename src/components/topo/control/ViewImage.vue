@@ -13,31 +13,31 @@
 </template>
 
 <script>
-import BaseView from './View';
+import BaseView from './View'
 export default {
-    name: 'view-image',
-    extends: BaseView,
-    props: {
+  name: 'view-image',
+  extends: BaseView,
+  props: {
 
-    },
-    computed: {
-        imageURL: function () {
-            if (this.detail.style.url == undefined || this.detail.style.url == '') {
-                return '';
-            } else {
-                return this.detail.style.url;
-            }
-        }
-    },
-    components: {},
-    data() {
-        return {
-
-        }
-    },
-    methods: {
+  },
+  computed: {
+    imageURL: function () {
+      if (!this.detail.style.url || !this.detail.style.url) {
+        return ''
+      } else {
+        return this.detail.style.url
+      }
+    }
+  },
+  components: {},
+  data () {
+    return {
 
     }
+  },
+  methods: {
+
+  }
 
 }
 </script>

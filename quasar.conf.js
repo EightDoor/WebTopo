@@ -1,25 +1,23 @@
 // Configuration for your app
-const path = require('path');
-function rootPath(dir) {
+const path = require('path')
+function rootPath (dir) {
   return path.join(__dirname, '.', dir)
 }
 
 const APP_INFO = {
-  NAME: "WebTopo",
-  PKG_NAME: "WebTopo"
+  NAME: 'WebTopo',
+  PKG_NAME: 'WebTopo'
 }
 
 module.exports = function (ctx) {
   return {
     boot: [
       // references /src/boot/<name>.js
-      'i18n',
       'axios',
       'x2js',
       'EventBus'
     ],
     css: [
-      'app.styl'
     ],
     extras: [
       'material-icons' // optional, you are not bound to it
@@ -35,16 +33,16 @@ module.exports = function (ctx) {
       },
       scopeHoisting: true,
       vueRouterMode: 'history',
-      //publicPath: "/WebTopo",
-      publicPath: '/WebTopo/dist/spa/', //注意：这里请根据实际情况部署
+      // publicPath: "/WebTopo",
+      publicPath: '/WebTopo/dist/spa/', // 注意：这里请根据实际情况部署
       vueCompiler: true,
       gzip: true,
       // analyze: true,
       // extractCSS: false,
-      extendWebpack(cfg) {
+      extendWebpack (cfg) {
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
-          "@": rootPath("src")
+          '@': rootPath('src')
         }
       }
     },
@@ -52,11 +50,11 @@ module.exports = function (ctx) {
       // https: true,
       port: 8888,
       open: true, // opens browser window automatically
-      proxy: {        
+      proxy: {
         '/api': {
-          target: 'http://xxxxxx:8080/api',  // 接口域名
-          secure: false,  // 如果是https接口，需要配置这个参数
-          changeOrigin: true,  //是否跨域
+          target: 'http://xxxxxx:8080/api', // 接口域名
+          secure: false, // 如果是https接口，需要配置这个参数
+          changeOrigin: true, // 是否跨域
           pathRewrite: {
             '^/api': ''
           }
@@ -64,7 +62,7 @@ module.exports = function (ctx) {
         '/open/api/weather': {
           target: 'http://www.sojson.com/',
           changeOrigin: true
-        }        
+        }
       }
     },
     // framework: 'all' --- includes everything; for dev only!
@@ -167,7 +165,7 @@ module.exports = function (ctx) {
         // win32metadata: { ... }
       },
       builder: {
-        productName: APP_INFO.PKG_NAME,
+        productName: APP_INFO.PKG_NAME
         // https://www.electron.build/configuration/configuration
 
         // appId: 'quasar-app'

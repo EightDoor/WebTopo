@@ -24,7 +24,7 @@ export default {
     position: {
       type: String,
       default: 'relative',
-      validator: function(val) {
+      validator: function (val) {
         return ['absolute', 'fixed', 'relative', 'static', 'inherit'].indexOf(val) !== -1
       }
     }, // 规定元素的定位类型
@@ -51,7 +51,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       windowWidth: 0, // 窗口宽度
       windowHeight: 0, // 窗口高度
@@ -76,30 +76,30 @@ export default {
   },
   watch: {
   },
-  mounted() {
+  mounted () {
     document.documentElement.addEventListener('mousemove', this.dottedLineMove, true)
     document.documentElement.addEventListener('mouseup', this.dottedLineUp, true)
     document.documentElement.addEventListener('keyup', this.keyboard, true)
     this.init()
     this.quickGeneration(this.presetLine) // 生成预置参考线
     const self = this // 绑定窗口调整大小onresize事件
-    window.onresize = function() { // 如果直接使用this,this指向的不是vue实例
+    window.onresize = function () { // 如果直接使用this,this指向的不是vue实例
       self.xScale = []
       self.yScale = []
       self.init()
     }
   },
-  beforeDestroy: function() {
+  beforeUnmount: function () {
     document.documentElement.removeEventListener('mousemove', this.dottedLineMove, true)
     document.documentElement.removeEventListener('mouseup', this.dottedLineUp, true)
     document.documentElement.removeEventListener('keyup', this.keyboard, true)
   },
   methods: {
-    init() {
+    init () {
       this.box()
       this.scaleCalc()
     },
-    box() {
+    box () {
       if (this.isScaleRevise) { // 根据内容部分进行刻度修正
         const content = document.getElementById('content')
         const contentLeft = content.offsetLeft
@@ -115,20 +115,20 @@ export default {
           }
         }
       }
-      if(this.parent){
-        const style = window.getComputedStyle(this.$el.parentNode,null)
+      if (this.parent) {
+        const style = window.getComputedStyle(this.$el.parentNode, null)
         this.windowWidth = parseInt(style.getPropertyValue('width'), 10)
         this.windowHeight = parseInt(style.getPropertyValue('height'), 10)
-      }else {
+      } else {
         this.windowWidth = document.documentElement.clientWidth - this.leftSpacing
         this.windowHeight = document.documentElement.clientHeight - this.topSpacing
       }
       this.rulerWidth = document.getElementById('verticalRuler').clientWidth
       this.rulerHeight = document.getElementById('levelRuler').clientHeight
-      this.topSpacing = document.getElementById('levelRuler').getBoundingClientRect().y //.offsetParent.offsetTop
-      this.leftSpacing =document.getElementById('verticalRuler').getBoundingClientRect().x// .offsetParent.offsetLeft
+      this.topSpacing = document.getElementById('levelRuler').getBoundingClientRect().y // .offsetParent.offsetTop
+      this.leftSpacing = document.getElementById('verticalRuler').getBoundingClientRect().x// .offsetParent.offsetLeft
     }, // 获取窗口宽与高
-    scaleCalc() {
+    scaleCalc () {
       for (let i = 0; i < this.windowWidth; i += 1) {
         if (i % 50 === 0) {
           this.xScale.push({ id: i })
@@ -140,15 +140,15 @@ export default {
         }
       }
     }, // 计算刻度
-    newLevelLine() {
+    newLevelLine () {
       this.isDrag = true
       this.dragFlag = 'x'
     }, // 生成一个水平参考线
-    newVerticalLine() {
+    newVerticalLine () {
       this.isDrag = true
       this.dragFlag = 'y'
     }, // 生成一个垂直参考线
-    dottedLineMove($event) {
+    dottedLineMove ($event) {
       switch (this.dragFlag) {
         case 'x':
           if (this.isDrag) {
@@ -174,7 +174,7 @@ export default {
           break
       }
     }, // 虚线移动
-    dottedLineUp($event) {
+    dottedLineUp ($event) {
       if (this.isDrag) {
         this.isDrag = false
         switch (this.dragFlag) {
@@ -182,7 +182,7 @@ export default {
             this.levelLineList.push(
               {
                 id: 'levelLine' + this.levelLineList.length + 1,
-                title: $event.pageY + 1 - this.topSpacing -18 + 'px',
+                title: $event.pageY + 1 - this.topSpacing - 18 + 'px',
                 top: $event.pageY - this.topSpacing + 1
               }
             )
@@ -191,7 +191,7 @@ export default {
             this.verticalLineList.push(
               {
                 id: 'verticalLine' + this.verticalLineList.length + 1,
-                title: $event.pageX + 1 - this.leftSpacing -18 + 'px',
+                title: $event.pageX + 1 - this.leftSpacing - 18 + 'px',
                 left: $event.pageX - this.leftSpacing + 1
               }
             )
@@ -220,7 +220,7 @@ export default {
               })
               this.levelLineList.splice(Index, 1, {
                 id: id,
-                title: $event.pageY + 1 - this.topSpacing -18 + 'px',
+                title: $event.pageY + 1 - this.topSpacing - 18 + 'px',
                 top: $event.pageY - this.topSpacing + 1
               })
             }
@@ -260,23 +260,23 @@ export default {
         this.verticalDottedTop = this.levelDottedLeft = -10
       }
     }, // 虚线松开
-    levelDragRuler() {
+    levelDragRuler () {
       this.newLevelLine()
     }, // 水平标尺处按下鼠标
-    verticalDragRuler() {
+    verticalDragRuler () {
       this.newVerticalLine()
     }, // 垂直标尺处按下鼠标
-    dragLevelLine(id) {
+    dragLevelLine (id) {
       this.isDrag = true
       this.dragFlag = 'l'
       this.dragLineId = id
     }, // 水平线处按下鼠标
-    dragVerticalLine(id) {
+    dragVerticalLine (id) {
       this.isDrag = true
       this.dragFlag = 'v'
       this.dragLineId = id
     }, // 垂直线处按下鼠标
-    keyboard($event) {
+    keyboard ($event) {
       if (this.isHotKey) {
         switch ($event.keyCode) {
           case this.keyCode.r:
@@ -285,7 +285,7 @@ export default {
         }
       }
     }, // 键盘事件
-    quickGeneration(params) {
+    quickGeneration (params) {
       if (params !== []) {
         params.forEach(item => {
           switch (item.type) {

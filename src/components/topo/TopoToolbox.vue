@@ -1,10 +1,10 @@
 <template>
   <div class="topo-toolbox">
     <q-list highlight separator class="full-height">
-      <template v-for="(group,index1) in toolbox">
+      <div v-for="(group,index1) in toolbox" :key="index1">
         <q-expansion-item :icon="group.icon" :label="group.title" v-bind:key="index1">
           <div class="toolbox-group">
-            <template v-for="(value,index) in group.items">
+            <div v-for="(value,index) in group.items" :key="index">
               <div
                 class="toolbox-item"
                 v-bind:key="index"
@@ -32,20 +32,19 @@
                   <div class="toolbox-item-text">{{value.text}}</div>
                 </template>
               </div>
-            </template>
+            </div>
           </div>
         </q-expansion-item>
-      </template>
+      </div>
     </q-list>
   </div>
 </template>
 
 <script>
-import jsonBase from './data-toolbox/base.json';
-import jsonChart from './data-toolbox/chart.json';
-import jsonOffice from './data-toolbox/office.json';
-import jsonSvg from './data-toolbox/svg.json';
-import jsonSvgDianli from './data-toolbox/svg-dianli.json';
+import jsonBase from './data-toolbox/base.json'
+import jsonChart from './data-toolbox/chart.json'
+import jsonOffice from './data-toolbox/office.json'
+import jsonSvg from './data-toolbox/svg.json'
 export default {
   name: 'TopoToolbox',
   data () {
@@ -53,22 +52,22 @@ export default {
       toolbox: [
 
       ],
-      selectedIndex: -1,
+      selectedIndex: -1
     }
   },
   methods: {
     onDragstart (event, info) {
-      var infoJson = JSON.stringify(info.info);
-      event.dataTransfer.setData('my-info', infoJson);
-    },
+      const infoJson = JSON.stringify(info.info)
+      event.dataTransfer.setData('my-info', infoJson)
+    }
   },
   mounted () {
-    this.toolbox = [];
-    this.toolbox.push(jsonBase);
-    this.toolbox.push(jsonChart);
-    this.toolbox.push(jsonOffice);
-    this.toolbox.push(jsonSvg);
-    //this.toolbox.push(jsonSvgDianli);        
+    this.toolbox = []
+    this.toolbox.push(jsonBase)
+    this.toolbox.push(jsonChart)
+    this.toolbox.push(jsonOffice)
+    this.toolbox.push(jsonSvg)
+    // this.toolbox.push(jsonSvgDianli);
   }
 }
 </script>
